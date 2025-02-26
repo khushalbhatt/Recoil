@@ -37,7 +37,7 @@ function Todo() {
    }
   return (
     <div>
-      <input onChange={(e)=>setNewTodo(e.target.value)} type="text" />
+      <input value={newTodo} onChange={(e)=>setNewTodo(e.target.value)} type="text" />
       <button  onClick={addtodo}>Add</button>
       {todo.map((item) => (
         <div key={item.id}>
