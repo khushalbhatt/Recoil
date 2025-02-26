@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
-import { countAtom, evenSelector } from './store/atoms/count';
+import { countAtom, evenSelector,todoselector,todoAtom } from './store/atoms/count';
 import { useRecoilValue, RecoilRoot, useRecoilState } from 'recoil';
 
 function App() {
@@ -16,9 +16,35 @@ function App() {
 function Count() {
   return (
     <>
+      <Todo></Todo>
       <Countrender />
       <Button />
     </>
+  );
+}
+
+
+function Todo() {
+  const [todo,updatetodo] = useRecoilState(todoAtom);
+  const [newTodo,setNewTodo] = useState('');
+  function addtodo(){
+      const newTodoItem = {
+        id: todo.length + 1,
+        title: newTodo,
+      }
+      updatetodo([...todo, newTodoItem]);
+      setNewTodo('');
+   }
+  return (
+    <div>
+      <input onChange={(e)=>setNewTodo(e.target.value)} type="text" />
+      <button  onClick={addtodo}>Add</button>
+      {todo.map((item) => (
+        <div key={item.id}>
+          <p>{item.title}</p>
+        </div>
+      ))}
+    </div>
   );
 }
 
